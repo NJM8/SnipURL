@@ -33,7 +33,7 @@ export default {
         alert("Please enter a url");
       }
 
-      axios.get(`http://localhost:8000/new/${this.originalUrl}`)
+      axios.get(`https://natethedevurlshortener.herokuapp.com/new/${this.originalUrl}`)
         .then(response => {
           if (response.data.urlOriginal === "Invalid Url") {
             alert("please enter a valid url. ex: https://www.google.com");
