@@ -40,10 +40,8 @@
       "parser": "babel-eslint"
     }
   },
-  "postcss": {
-    "plugins": {
-      "autoprefixer": {}
-    }
+  "engines": {
+    "node": ">= 6.0.0",
   },
   "browserslist": [
     "> 1%",
