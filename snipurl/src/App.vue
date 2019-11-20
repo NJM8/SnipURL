@@ -1,17 +1,22 @@
 <template>
-  <div id="app">
-    <h1>SnipURL</h1>
-    <p>A simple url shortener, enter any complete valid url below to recieve an easy to remember shortened version!</p>
-    <input type="text" v-model="originalUrl">
-    <button @click="submitUrl">Submit</button>
-    <p>Shortened URL: {{ this.shortUrl }}</p>
+  <div id="app" class="container">
+    <h1 class="title">SnipURL</h1>
+    <p class="text">A simple url shortener, enter any complete valid url (ex: https://www.google.com) below to recieve an easy to remember shortened version!</p>
+    <input type="text" v-model="originalUrl" class="input">
+    <button @click="submitUrl" class="button submit">Submit</button>
+    <div v-if="shortUrl.length > 0" >
+      <p class="text">Shortened URL: <span class="urlText">{{ this.shortUrl }}</span></p>
+      <button           
+        v-clipboard:copy="shortUrl"
+        v-clipboard:success="handleCopySuccess"
+        v-clipboard:error="handleCopyFailure" class="button">Copy</button>
+    </div>
   </div>
 </template>
 
 <style src="@/assets/styles.css" lang="css"></style>
 
 <script>
-
 import axios from "axios";
 
 export default {
@@ -28,12 +33,23 @@ export default {
         alert("Please enter a url");
       }
 
-      axios.get(`http://localhost:8000/new/${this.originalUrl}`).then(response => {
-        if (response.data.urlOriginal === "Invalid Url") {
-          alert("please enter a valid url. ex: https://www.google.com");
-        }
-        this.shortUrl = response.data.urlShortened;
-      })
+      axios.get(`http://localhost:8000/new/${this.originalUrl}`)
+        .then(response => {
+          if (response.data.urlOriginal === "Invalid Url") {
+            alert("please enter a valid url. ex: https://www.google.com");
+            return;
+          }
+          this.shortUrl = response.data.urlShortened;
+        })
+        .catch(() => {
+          alert("There was an error with your request, please try again.")
+        })
+    },
+    handleCopySuccess() {
+      alert("Successfully copied url");
+    },
+    handleCopyFailure() {
+      alert("Copy has failed, please try again");
     }
   }
 }
