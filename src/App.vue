@@ -40,6 +40,7 @@ export default {
             return;
           }
           this.shortUrl = response.data.urlShortened;
+          this.originalUrl = "";
         })
         .catch(() => {
           alert("There was an error with your request, please try again.")
