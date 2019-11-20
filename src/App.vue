@@ -2,7 +2,7 @@
   <div id="app" class="container">
     <h1 class="title">SnipURL</h1>
     <p class="text">A simple url shortener, enter any complete valid url (ex: https://www.google.com) below to recieve an easy to remember shortened version!</p>
-    <input type="text" v-model="originalUrl" class="input">
+    <input type="text" v-model="originalUrl" class="input" @keyup.enter="submitUrl">
     <button @click="submitUrl" class="button submit">Submit</button>
     <div v-if="shortUrl.length > 0" >
       <p class="text">Shortened URL: <span class="urlText">{{ this.shortUrl }}</span></p>
